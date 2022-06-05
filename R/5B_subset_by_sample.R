@@ -122,7 +122,7 @@ get.sample.indexes <- function(my.list,
     
     date.range <- lubridate::"%--%"(start.YY.MM.DD, end.YY.MM.DD)
     cat("The date range is: ", as.character(start.YY.MM.DD), "-", as.character(end.YY.MM.DD), "\n")
-    index.dates <- which(my.dates %within% date.range)
+    index.dates <- which(lubridate::"%within%"(my.dates, date.range))
     return(index.dates)
   }
   
