@@ -1,19 +1,8 @@
 # RRR 10-14-20
 
-# ---- set-up for troubleshooting ----
-
-# input.combo.list <- "data/limony-IRD/2020-07-12_processing/combined_samples_6000.rds"
-# output.tax.list <- "data/limony-IRD/2020-07-12_processing/taxlist_samples_6000.rds"
-# 
-# combo.list <- readRDS(file = input.combo.list)
-# names(combo.list)
-# 
-# cat("Making file: ", output.tax.list, "\n")
-# saveRDS(object = tax.list, file = output.tax.list)
-
-
 # ---- sourceable grouping function! ----
 
+#' @export
 make.empty.list.structure <- function(ListNames){
   # the ListNames can be something like c("OTU", "kingdom","phylum","class","order","family/lineage","genus/clade","species/tribe")
   empty.list <- list(NULL)
@@ -24,6 +13,7 @@ make.empty.list.structure <- function(ListNames){
   return(empty.list)
 }
 
+#' @export
 group.by.tax <- function(my.list){
   # my.list is either the combo.list or the subset.list
   # should include these names, which contain individual matrices

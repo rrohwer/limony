@@ -9,6 +9,7 @@
 # 3. subset to those indexes
 # 4. re-group (with the separate grouping script)
 
+#' @export
 flatten.to.single.level <- function(my.list, finest.level = length(my.list$bq)){
   if (is.character(finest.level)){
     finest.level <- get.taxon.level(my.list = my.list, taxon = finest.level)
@@ -20,6 +21,7 @@ flatten.to.single.level <- function(my.list, finest.level = length(my.list$bq)){
   return(my.list)
 }
 
+#' @export
 get.taxon.level <- function(my.list, taxon){
   # my.list can be tax.list or flat.list
   # this will not search through OTU names
@@ -55,6 +57,7 @@ get.taxon.level <- function(my.list, taxon){
   return(taxa.level)
 }
 
+#' @export
 print.names.under.taxon <- function(my.list, taxon, lower.lvl = "print minimum", upper.lvl = F, show.lvls = F, sort.by = "alphabet"){
   # my.list can be tax.list or flat.list
   
@@ -105,6 +108,7 @@ print.names.under.taxon <- function(my.list, taxon, lower.lvl = "print minimum",
   return(my.names)
 }
 
+#' @export
 get.taxon.indeces <- function(my.list, taxa){
   # taxon is a character vector of taxa names 
   
@@ -132,6 +136,7 @@ get.taxon.indeces <- function(my.list, taxa){
   return(keep.index)
 }
 
+#' @export
 renormalize <- function(my.list, by.day = TRUE, by.taxon.max = FALSE, verbose = TRUE){
   
   renorm.by.day <- function(my.mat, col.tots){
@@ -209,6 +214,7 @@ renormalize <- function(my.list, by.day = TRUE, by.taxon.max = FALSE, verbose = 
   return(my.list)
 }
 
+#' @export
 subset.by.taxa <- function(my.list, keep.index, renormalize = F, verbose = T){
   
   # functions ----
@@ -276,6 +282,7 @@ subset.by.taxa <- function(my.list, keep.index, renormalize = F, verbose = T){
   return(my.list)
 }
 
+#' @export
 make.zero.below.LOQ <- function(my.list, LOQ.def = "bq", renorm = TRUE, verbose = TRUE){
   # my.list can be tax.list or flat.list or y.vals (flat.list + extra y.max element)
   if ( !is.matrix(my.list$bq) ){

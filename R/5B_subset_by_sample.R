@@ -1,19 +1,21 @@
 # RRR 2020-11-25
 # pull out particular samples
 # based on dates or other metadata
-# create a list that includes only the subset indeces
-# or create a list that combines the subset indeces
+# create a list that includes only the subset indices
+# or create a list that combines the subset indices
 # requires the tax.list and optionally the key (if [DNA] is of interest)
 
 
 library(lubridate)
 
+#' @export
 convert.sample.names.to.dates <- function(sample.names){
   sample.names <- substr(x = sample.names, start = 1, stop = 9)
   sample.names <- parse_date_time(x = sample.names, orders = "dmy", tz = "Etc/GMT-5")
   return(sample.names)
 }
 
+#' @export
 get.sample.indeces <- function(my.list,
                            start.YY.MM.DD = "start", end.YY.MM.DD = "end", 
                            dates.are.season.range = FALSE,
@@ -195,6 +197,7 @@ get.sample.indeces <- function(my.list,
   return(index.keep)
 }
 
+#' @export
 subset.by.sample <- function(my.list, keep.index){
   # my.list can be tax.list or flat.list or y.vals (flat.list + extra y.max element)
   if ( !is.matrix(my.list$bq) ){
@@ -219,6 +222,7 @@ subset.by.sample <- function(my.list, keep.index){
   return(my.list)
 }
 
+#' @export
 group.by.sample <- function(my.list, group.index.list, new.colname.vect){
   
   propagate.error.sums <- function(error.vector){
