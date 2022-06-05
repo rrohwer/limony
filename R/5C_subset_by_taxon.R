@@ -356,4 +356,34 @@ make.zero.below.LOQ <- function(my.list, LOQ.def = "bq", renorm = TRUE, verbose 
   return(my.list)
 }
 
-
+#' Sort by abundance
+#' 
+#' Sort the OTU table rows by the overall abundances of the OTU. Can use your preferred summary function.
+#' @param my.list A "flat.list" structure
+#' @param sort.by Any function that will be applied to summarize the abundance of the rows. For example, this could be sum, mean, median. It could also be the character string "presence" to sort by presence/absence.
+#' @export sort.by.abundance
+sort.by.abundance <- function(my.list, sort.by = sum){
+  # take in a flat.list structure
+  # the sort.by function is applied to the rows, and then that is what they're sorted on
+  # for example it can be sum, mean, median, max, ... it should be a function
+  
+  av.mat <- my.list$av
+  
+  if (!is.function(sort.by)){
+    if (sort.by == "presence"){
+      av.mat <- av.mat > 0
+      sort.by <- sum
+    }else{
+      return(cat("sort.by should be a function. For example could be sum, mean, median, max, or \"presence\" in quotes for custom presence/absence\n"))
+    }
+  }
+  
+  sorting.values <- apply(X = av.mat, MARGIN = 1, FUN = sort.by)
+  index <- order(sorting.values, decreasing = T)
+  
+  for (e in 1:length(my.list)){
+    my.list[[e]] <- my.list[[e]][index, ,drop = F]
+  }
+  
+  return(my.list)
+}
