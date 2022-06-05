@@ -83,7 +83,7 @@ get.sample.indexes <- function(my.list,
       return(cat("start date must be character format: \"MM-DD-YY\" \nor the character string \"start\" \nor a numeric vector of pre-selected indexes.\n"))
     }
     if (length(start.YY.MM.DD) > 1){
-      return(cat("Using a custom vector of date indeces.\n"))
+      return(cat("Using a custom vector of date indexes.\n"))
     }
     if (!is.character(start.YY.MM.DD)){
       return(cat("start date must be character format: \"MM-DD-YY\" \nor the character string \"start\" \nor a numeric vector of pre-selected indexes.\n"))
@@ -98,7 +98,7 @@ get.sample.indexes <- function(my.list,
   
   find.date.range <- function(my.dates, start.YY.MM.DD, end.YY.MM.DD){
     # my.samples = the in.R.colnames
-    # start.YY.MM.DD = either a character date, the word "start", or a numeric vector of date indeces 
+    # start.YY.MM.DD = either a character date, the word "start", or a numeric vector of date indexes 
     # end.YY.MM.DD = either a character date or the word "end" for the last date
     
     if (length(start.YY.MM.DD) > 1){
@@ -128,7 +128,7 @@ get.sample.indexes <- function(my.list,
   
   find.season.range <- function(my.dates, start.YY.MM.DD, end.YY.MM.DD){
     if (length(start.YY.MM.DD) > 1){
-      # use if you already found the date indeces on your own, but also want to filter by other sample criteria
+      # use if you already found the date indexes on your own, but also want to filter by other sample criteria
       return(start.YY.MM.DD)
     }
     
@@ -248,7 +248,7 @@ subset.by.sample <- function(my.list, keep.index){
 #' Lump samples together into a single group. For example, you could group all June samples into one sample.
 #' 
 #' @param my.list Either a "tax.list" or a "flat.list."
-#' @param group.index.list A list where each element is a vector of sample (column) indeces that should be grouped together.
+#' @param group.index.list A list where each element is a vector of sample (column) indexes that should be grouped together.
 #' @param new.colname.vect A vector of new column names. The length of this vector should match the length of the group.index.list.
 #' @return Either a "tax.list" or a "flat.list" where the the samples have been grouped together. Taxon abundances are summed, standard deviation is propagated, and quantification limits are recalculated.
 #' @export

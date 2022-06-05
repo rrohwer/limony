@@ -112,13 +112,13 @@ print.names.under.taxon <- function(my.list, taxon, lower.lvl = "print minimum",
   
   if (is.function(sort.by)){
     my.list <- flatten.to.single.level(my.list = my.list, finest.level = max(lvls))
-    index <- get.taxon.indeces(my.list = my.list, taxa = taxon)
+    index <- get.taxon.indexes(my.list = my.list, taxa = taxon)
     my.list <- subset.by.taxa(my.list = my.list, keep.index = index, verbose = F, renormalize = F)
     my.list <- sort.by.abundance(my.list = my.list, sort.by = sort.by)
     my.names <- my.list$names[ ,lvls]
   }else if(sort.by == "presence"){
     my.list <- flatten.to.single.level(my.list = my.list, finest.level = max(lvls))
-    index <- get.taxon.indeces(my.list = my.list, taxa = taxon)
+    index <- get.taxon.indexes(my.list = my.list, taxa = taxon)
     my.list <- subset.by.taxa(my.list = my.list, keep.index = index, verbose = F, renormalize = F)
     my.list <- sort.by.abundance(my.list = my.list, sort.by = sort.by)
     my.names <- my.list$names[ ,lvls]
@@ -261,7 +261,7 @@ subset.by.taxa <- function(my.list, keep.index, renormalize = F, verbose = T){
   
   # functions ----
   
-  subset.to.row.indeces <- function(index.keep, my.list){
+  subset.to.row.indexes <- function(index.keep, my.list){
     # my.list can be tax.list or flat.list or y.vals (flat.list + extra y.max element)
     if ( !is.matrix(my.list$bq) ){
       names(my.list)
@@ -317,7 +317,7 @@ subset.by.taxa <- function(my.list, keep.index, renormalize = F, verbose = T){
   
   # actions ----
   
-  my.list <- subset.to.row.indeces(index.keep = keep.index, my.list = my.list)
+  my.list <- subset.to.row.indexes(index.keep = keep.index, my.list = my.list)
   
   my.list <- renormalize.abundances(my.list = my.list, renormalize = renormalize, message = verbose)
   
