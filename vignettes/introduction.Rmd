@@ -47,7 +47,7 @@ br          | Below resolution (logical, true if abundance is lower than a singl
 
 The limony package lets you easily subset this list structure to extract the dates or taxa you are interested in while maintaining all the other information about standard deviation and quantification limits. This vignette will go through how to use the subsetting functions. 
 
-<br>
+## Get OTU table
 _"But wait! I just want an OTU table!"_ No problem, do this and skip the rest of the vignette :)
 ```{r eval=TRUE}
 otu.table <- limony$av$seqID
@@ -81,3 +81,37 @@ only.June <- subset.by.sample(my.list = limony, keep.index = index)
 ```
 
 ## Subset by Taxa
+
+First you flatten the list structure to a single taxon level using `flatten.to.single.level`, then you find the indexes of the taxa you want to keep using `get.taxon.indexes`, then you subset to those taxa using `subset.by.taxa`, and finally you re-group to get all the taxonomy levels again using `group.by.tax`. By re-grouping the taxonomy lists you can keep track of the average and standard deviation at each taxonomy level.
+
+Example: Keep only acI
+```{r eval=FALSE}
+flat.list <- flatten.to.single.level(my.list = limony)
+index <- get.taxon.indexes(my.list = flat.list, taxa = "acI")
+flat.acI <- subset.by.taxa(my.list = flat.list, keep.index = index)
+acI <- group.by.tax(my.list = flat.acI)
+````
+
+Example: Remove chloroplasts and renormalize the data
+```{r eval=FALSE}
+flat.list <- flatten.to.single.level(my.list = limony)
+index <- get.taxon.indexes(my.list = flat.list, taxa = "Chloroplast")
+flat.no.chloro <- subset.by.taxa(my.list = flat.list, keep.index = -index) # note the minus sign in front of index
+no.chloro <- group.by.tax(my.list = flat.no.chloro)
+```
+
+## Spell the taxa names correctly
+Subsetting by taxa can be annoying, because the taxonomy name is case sensitive and must be spelled correctly. To help you figure out what the correct names are, there are is a  handy function called `print.names.under.taxon`.
+
+Example: I want to subset Microcystis, but I don't know exactly what it's called in Silva.
+```{r eval=TRUE}
+# I know it's a cyanobacteria
+print.names.under.taxon(my.list = limony, taxon = "Cyanobacteria")
+
+# Now I can step down the taxonomy until I find the correct spelling.
+# I'll order by most abundant so that I find it easily.
+print.names.under.taxon(my.list = limony, taxon = "Cyanobacteriia", sort.by = mean)
+
+
+
+```
