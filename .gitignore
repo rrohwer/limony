@@ -2,3 +2,4 @@
 .DS_Store
 .Rbuildignore
 limony.Rproj
+inst/doc
