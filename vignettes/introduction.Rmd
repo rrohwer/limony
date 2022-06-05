@@ -113,7 +113,11 @@ print.names.under.taxon(my.list = limony, taxon = "Microcystaceae")
 
 # And specifically like it is "Microcystis.Microcystaceae"
 # Now I can use this spelling to subset out Microcystis:
-index <- get.taxon.indexes(my.list = limony, taxa = "Microcystis.Microcystaceae")
-microcystis <- subset.by.taxa(my.list = limony, keep.index = index)
+flat.lim <- flatten.to.single.level(my.list = limony)
+index <- get.taxon.indexes(my.list = flat.lim, taxa = "Microcystis.Microcystaceae")
+microcystis <- subset.by.taxa(my.list = flat.lim, keep.index = index)
+microcystis <- group.by.tax(my.list = microcystis)
 
+# And I can look at Microcystis OTUs:
+microcystis$av
 ```
