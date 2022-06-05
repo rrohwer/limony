@@ -22,6 +22,7 @@ make.empty.list.structure <- function(ListNames){
 #' 
 #' Group a "flat list" structure by taxonomy, so that it becomes a nested list with each taxon level included separately. In addition to summing daughter taxa abundances, this function propagates error for the sd and calculates quantification limits.
 #' @param my.list A "flat.list" that includes these names: "names", "av", "sd", "bq", "pd", "br", each of which is an individual matrix.
+#' @param verbose Logical. 
 #' @return A "tax.list" that has these names: "names", "av", "sd", "bq", "pd", "br", each of which is a nested list that has a matrix for each taxonomy level.
 #' @export group.by.tax
 group.by.tax <- function(my.list, verbose = FALSE){
