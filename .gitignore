@@ -3,3 +3,5 @@
 .Rbuildignore
 limony.Rproj
 inst/doc
+.RData
+.Rhistory
