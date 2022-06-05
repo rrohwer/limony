@@ -5,13 +5,12 @@
 # or create a list that combines the subset indices
 # requires the tax.list and optionally the key (if [DNA] is of interest)
 
-
-library(lubridate)
+# uses lubridate package
 
 #' @export
 convert.sample.names.to.dates <- function(sample.names){
   sample.names <- substr(x = sample.names, start = 1, stop = 9)
-  sample.names <- parse_date_time(x = sample.names, orders = "dmy", tz = "Etc/GMT-5")
+  sample.names <- lubridate::parse_date_time(x = sample.names, orders = "dmy", tz = "Etc/GMT-5")
   return(sample.names)
 }
 
@@ -87,7 +86,7 @@ get.sample.indeces <- function(my.list,
     # end.YY.MM.DD = either a character date or the word "end" for the last date
     
     if (length(start.YY.MM.DD) > 1){
-      # use if you already found the date indeces on your own, but also want to filter by other sample criteria
+      # use if you already found the date indices on your own, but also want to filter by other sample criteria
       return(start.YY.MM.DD)
     }
     
@@ -95,14 +94,14 @@ get.sample.indeces <- function(my.list,
       start.YY.MM.DD <- min(my.dates)
       cat("Using earliest date as start date: ", as.character(start.YY.MM.DD), "\n")
     }else{
-      start.YY.MM.DD <- parse_date_time(x = start.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
+      start.YY.MM.DD <- lubridate::parse_date_time(x = start.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
     }
     
     if (end.YY.MM.DD == "end"){
       end.YY.MM.DD <- max(my.dates)
       cat("Using latest date as end date: ", as.character(end.YY.MM.DD), "\n")
     }else{
-      end.YY.MM.DD <- parse_date_time(x = end.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
+      end.YY.MM.DD <- lubridate::parse_date_time(x = end.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
     }
     
     date.range <- start.YY.MM.DD %--% end.YY.MM.DD
@@ -119,23 +118,23 @@ get.sample.indeces <- function(my.list,
     
     if (start.YY.MM.DD == "start"){
       start.YY.MM.DD <- paste(min(year(my.dates)),1,1,sep = "-")
-      start.YY.MM.DD <- parse_date_time(x = start.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
+      start.YY.MM.DD <- lubridate::parse_date_time(x = start.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
     }else{
-      start.YY.MM.DD <- parse_date_time(x = start.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
+      start.YY.MM.DD <- lubridate::parse_date_time(x = start.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
     }
     
     if (end.YY.MM.DD == "end"){
       end.YY.MM.DD <- paste(max(year(my.dates)),12,31,sep = "-")
-      end.YY.MM.DD <- parse_date_time(x = end.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
+      end.YY.MM.DD <- lubridate::parse_date_time(x = end.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
     }else{
-      end.YY.MM.DD <- parse_date_time(x = end.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
+      end.YY.MM.DD <- lubridate::parse_date_time(x = end.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
     }
     
-    my.yrs <- unique(year(my.dates))
-    my.start.month <- month(start.YY.MM.DD)
-    my.start.day <- day(start.YY.MM.DD)
-    my.end.month <- month(end.YY.MM.DD)
-    my.end.day <- day(end.YY.MM.DD)
+    my.yrs <- unique(lubridate::year(my.dates))
+    my.start.month <- lubridate::month(start.YY.MM.DD)
+    my.start.day <- lubridate::day(start.YY.MM.DD)
+    my.end.month <- lubridate::month(end.YY.MM.DD)
+    my.end.day <- lubridate::day(end.YY.MM.DD)
     
     index.dates <- NULL
     for(y in my.yrs){
@@ -179,17 +178,17 @@ get.sample.indeces <- function(my.list,
     index.daterange <- find.season.range(my.dates = my.dates, start.YY.MM.DD = start.YY.MM.DD, end.YY.MM.DD = end.YY.MM.DD)
   }
   
-  index.keep <- setdiff(x = index.daterange, y = index.nonstandard.toss)
-  index.keep <- setdiff(x = index.keep, y = index.lowyield.toss)
+  index.keep <- lubridate::setdiff(x = index.daterange, y = index.nonstandard.toss)
+  index.keep <- lubridate::setdiff(x = index.keep, y = index.lowyield.toss)
   
   if (only.prefiltered | only.diff.depths | only.diff.loc){
     index.nonstandard.keep <- find.nonstandard.samples(my.samples = my.samples, remove.prefiltered = only.prefiltered, remove.diff.depths = only.diff.depths, remove.diff.loc = only.diff.loc)
-    index.keep <- intersect(x = index.keep, y = index.nonstandard.keep)
+    index.keep <- lubridate::intersect(x = index.keep, y = index.nonstandard.keep)
   }
   
   if (only.low.dna){
     index.lowyield.keep <- find.low.dna.samples(my.samples = my.samples, my.key = my.key, dna.ng.ul = low.yield.ng.uL)
-    index.keep <- intersect(x = index.keep, y = index.lowyield.keep)
+    index.keep <- lubridate::intersect(x = index.keep, y = index.lowyield.keep)
   }
   
   cat("Returning the column indexes for", length(index.keep), "total samples that you want to keep.\n")
