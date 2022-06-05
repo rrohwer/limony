@@ -9,7 +9,7 @@ group.by.sample(my.list, group.index.list, new.colname.vect)
 \arguments{
 \item{my.list}{Either a "tax.list" or a "flat.list."}
 
-\item{group.index.list}{A list where each element is a vector of sample (column) indeces that should be grouped together.}
+\item{group.index.list}{A list where each element is a vector of sample (column) indexes that should be grouped together.}
 
 \item{new.colname.vect}{A vector of new column names. The length of this vector should match the length of the group.index.list.}
 }
