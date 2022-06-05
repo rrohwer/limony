@@ -32,9 +32,10 @@ flatten.to.single.level <- function(my.list, finest.level = length(my.list$bq)){
 #' Get the numeric level of the provided taxon name. Kingdom = 1, Phylum = 2, Class = 3, Order = 4, Family/Lineage = 5, Genus/Clade = 6, Species/Tribe = 7, SeqID = 8.
 #' @param my.list Either a "tax.list" or a "flat.list"
 #' @param taxon An exactly spelled taxon name. This is case sensitive.
+#' @param verbose Logical.
 #' @return The numeric taxon level.
 #' @export get.taxon.level
-get.taxon.level <- function(my.list, taxon){
+get.taxon.level <- function(my.list, taxon, verbose = TRUE){
   # my.list can be tax.list or flat.list
   # this will not search through OTU names
   
@@ -78,6 +79,7 @@ get.taxon.level <- function(my.list, taxon){
 #' @param upper.lvl The numeric upper taxon level names to print. By default no parent taxa are displayed.
 #' @param show.lvls FALSE or numeric vector. If a vector taxon levels is provided, it will print the taxon at those levels.
 #' @param sort.by How to order the daughter taxa. Either a function such as max or mean, or the character strings "presence" or "alphabet." By default results are shown alphabetically.
+#' @return Does not return a value, instead prints output to the console.
 #' @export print.names.under.taxon
 print.names.under.taxon <- function(my.list, taxon, lower.lvl = "print minimum", upper.lvl = F, show.lvls = F, sort.by = "alphabet"){
   # my.list can be tax.list or flat.list
@@ -94,7 +96,7 @@ print.names.under.taxon <- function(my.list, taxon, lower.lvl = "print minimum",
     my.names <- my.list$names
   }
   
-  t.lvl <- get.taxon.level(my.list = my.list, taxon = taxon)
+  t.lvl <- get.taxon.level(my.list = my.list, taxon = taxon, verbose = FALSE)
   
   if (lower.lvl == "print minimum"){
     lower.lvl <- t.lvl + 1
@@ -143,7 +145,7 @@ get.taxon.indexes <- function(my.list, taxa){
 
   otu.index <- NULL
   for (n in 1:length(taxa)){
-    t.lvl <- get.taxon.level(taxon = taxa[n], my.list = my.list)
+    t.lvl <- get.taxon.level(taxon = taxa[n], my.list = my.list, verbose = FALSE)
     index <- which(my.names[ ,t.lvl] == taxa[n])
     if (length(index) < 1){
       t.lvl <- 8
@@ -361,6 +363,7 @@ make.zero.below.LOQ <- function(my.list, LOQ.def = "bq", renorm = TRUE, verbose 
 #' Sort the OTU table rows by the overall abundances of the OTU. Can use your preferred summary function.
 #' @param my.list A "flat.list" structure
 #' @param sort.by Any function that will be applied to summarize the abundance of the rows. For example, this could be sum, mean, median. It could also be the character string "presence" to sort by presence/absence.
+#' @return a flat list with rows sorted by abundance instead of alphabetically.
 #' @export sort.by.abundance
 sort.by.abundance <- function(my.list, sort.by = sum){
   # take in a flat.list structure
