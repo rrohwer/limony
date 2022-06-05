@@ -107,17 +107,21 @@ Example: I want to subset Microcystis, but I don't know exactly what it's called
 ```{r eval=TRUE}
 # I know it's a "Cyanobacteriales"
 print.names.under.taxon(my.list = limony, taxon = "Cyanobacteriales")
-
 # Aha! Looks like it's "Microcystaceae".
-print.names.under.taxon(my.list = limony, taxon = "Microcystaceae")
-
-# And specifically like it is "Microcystis.Microcystaceae"
-# Now I can use this spelling to subset out Microcystis in August:
+```
+Example putting everything together:
+```{r eval=TRUE}
+# Now I can use this spelling to subset out Microcystis in July:
 flat.lim <- flatten.to.single.level(my.list = limony)
-index <- get.taxon.indexes(my.list = flat.lim, taxa = "Microcystis.Microcystaceae")
+
+index <- get.taxon.indexes(my.list = flat.lim, taxa = "Microcystaceae")
+
 microcystis <- subset.by.taxa(my.list = flat.lim, keep.index = index)
-index <- get.sample.indexes(my.list = microcystis, start.YY.MM.DD = "00-8-1", end.YY.MM.DD = "19-8-31", dates.are.season.range = TRUE)
+
+index <- get.sample.indexes(my.list = microcystis, start.YY.MM.DD = "00-7-1", end.YY.MM.DD = "19-7-31", dates.are.season.range = TRUE, remove.prefiltered = TRUE)
+
 microcystis <- subset.by.sample(my.list = microcystis, keep.index = index)
+
 microcystis <- group.by.tax(my.list = microcystis)
 
 # And I can look at Microcystis OTUs:
