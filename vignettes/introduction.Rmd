@@ -1,5 +1,6 @@
 ---
-title: "introduction"
+title: "limony"
+subtitle: "lake itag measurements over nineteen years"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction}
@@ -14,6 +15,69 @@ knitr::opts_chunk$set(
 )
 ```
 
+Please cite: _Data Announcement citation_
+
+## get started
+
+This package includes the limony dataset and functions to subset it. The limony dataset is a nineteen year 16S rRNA gene amplicon dataset from Lake Mendota, WI USA. More information about the dataset itself is available in the data announcement: _citation_
+
 ```{r setup}
+# Load the limony package
 library(limony)
+# Load the limony data
+data("limony")
 ```
+
+Let's explore the nested list data structure:  
+```{r eval=TRUE}
+# each of these elements contains a list of matrices, one per taxon level
+names(limony)
+
+# The nested lists are for each taxon level
+names(limony$names)
+```
+list name   | Matrix contents
+------------|-----------------------
+names       | Taxonomy Assignments (character)
+av          | Average abundances (numeric, the OTU table)
+sd          | Standard deviations (numeric)
+bq          | Below quantification (logical, true if pd OR br)
+pd          | Partial detection (logical, true if not present in all replicates)
+br          | Below resolution (logical, true if abundance is lower than a single read at the worst sequencing depth)
+
+The limony package lets you easily subset this list structure to extract the dates or taxa you are interested in while maintaining all the other information about standard deviation and quantification limits. This vignette will go through how to use the subsetting functions. 
+
+<br>
+_"But wait! I just want an OTU table!"_ No problem, do this and skip the rest of the vignette :)
+```{r eval=TRUE}
+otu.table <- limony$av$seqID
+otu.taxonomy <- limony$names$seqID
+sample.dates <- convert.sample.names.to.dates(sample.names = colnames(otu.table))
+otu.table[1:3,1:3] # numeric matrix
+otu.taxonomy[1:3,1:3] # character matrix
+sample.dates[1:3] # dates vector
+```
+
+## Subset by sample 
+
+First get the column indexes of the samples using `get.sample.inexes` and then subset limony using `subset.by.sample`.
+
+Example: Remove non-standard samples that were pre-filtered:
+```{r, eval=FALSE}
+index <- get.sample.indexes(my.list = limony, remove.prefiltered = TRUE)
+no.pf <- subset.by.sample(my.list = limony, keep.index = index)
+```
+
+Example: Keep only samples from 2015:
+```{r, eval=FALSE}
+index <- get.sample.indexes(my.list = limony, start.YY.MM.DD = "15-1-1", end.YY.MM.DD = "15-12-31")
+only.2015 <- subset.by.sample(my.list = limony, keep.index = index)
+```
+
+Example: Keep only samples from June, but across all years:
+```{r, eval=FALSE}
+index <- get.sample.indexes(my.list = limony, start.YY.MM.DD = "00-6-1", end.YY.MM.DD = "00-6-31", dates.are.season.range = TRUE) # year is ignored, can be any year
+only.June <- subset.by.sample(my.list = limony, keep.index = index)
+```
+
+## Subset by Taxa
