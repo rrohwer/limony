@@ -7,6 +7,11 @@
 
 # uses lubridate package
 
+#' Convert sample names to dates
+#' 
+#' This converts the limony sample names (column names) to a date format.
+#' @param sample.names The limony sample names, for ex: colnames(limony$av$kingdom)
+#' @return date-formatted sample dates. Note the time zone is GMT-5.
 #' @export
 convert.sample.names.to.dates <- function(sample.names){
   sample.names <- substr(x = sample.names, start = 1, stop = 9)
@@ -14,8 +19,19 @@ convert.sample.names.to.dates <- function(sample.names){
   return(sample.names)
 }
 
+#' Get sample indexes
+#' 
+#' Get the indexes of samples to either keep or remove. Samples can be selected based on date or based on known method irregularities.
+#' @param my.list either a "tax.list" or a "flat.list", so a list with these names: these names: "names", "av", "sd", "bq", "pd", "br", each of which contains either a list of taxonomy matrices or a single matrix.
+#' @param start.YY.MM.DD character ymd-formatted date, or "start" to indicate use the earliest date
+#' @param end.YY.MM.DD character ymd-formatted date, or "end" to indicate use the latest date
+#' @param dates.are.season.range logical. If FALSE, dates used are the range between the start and the end date. If TRUE, dates used are the range each year between the start and end month and day. If TRUE, the year must still be included but can be set to anything.
+#' @param remove.prefiltered logical. Remove the non-standard samples that received 10um pre-filtration.
+#' @param remove.diff.depths logical. Remove the non-standard samples that were taken at depths different than a 12 m integrated sample.
+#' @param remove.diff.loc logical. Remove the non-standard samples that were taken at a different location that the deep hole.
+#' @return A vector of indexes that can be used in the function subset.by.sample()
 #' @export
-get.sample.indeces <- function(my.list,
+get.sample.indexes <- function(my.list,
                            start.YY.MM.DD = "start", end.YY.MM.DD = "end", 
                            dates.are.season.range = FALSE,
                            remove.prefiltered = F, remove.diff.depths = F, remove.diff.loc = F,
@@ -196,6 +212,12 @@ get.sample.indeces <- function(my.list,
   return(index.keep)
 }
 
+#' Subset by sample (by column index)
+#' 
+#' Subset a "tax.list" or "flat.list" to the column indexes provided. The function get.sample.indexes can be used to generate the index vector.
+#' @param my.list Either a "tax.list" or a "flat.list", so a list with these names: these names: "names", "av", "sd", "bq", "pd", "br", each of which contains either a list of taxonomy matrices or a single matrix.
+#' @param keep.index The index corresponding to sample dates (columns) that you want to keep. Note that keep.index = -index can be used to remove the provided indexes instead.
+#' @return Either a "tax.list" or a "flat.list" where all the samples (columns) have been subset to the indexes provided.
 #' @export
 subset.by.sample <- function(my.list, keep.index){
   # my.list can be tax.list or flat.list or y.vals (flat.list + extra y.max element)
@@ -221,6 +243,14 @@ subset.by.sample <- function(my.list, keep.index){
   return(my.list)
 }
 
+#' Group by sample
+#' 
+#' Lump samples together into a single group. For example, you could group all June samples into one sample.
+#' 
+#' @param my.list Either a "tax.list" or a "flat.list."
+#' @param group.index.list A list where each element is a vector of sample (column) indeces that should be grouped together.
+#' @param new.colname.vect A vector of new column names. The length of this vector should match the length of the group.index.list.
+#' @return Either a "tax.list" or a "flat.list" where the the samples have been grouped together. Taxon abundances are summed, standard deviation is propagated, and quantification limits are recalculated.
 #' @export
 group.by.sample <- function(my.list, group.index.list, new.colname.vect){
   
