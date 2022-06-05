@@ -24,7 +24,7 @@ make.empty.list.structure <- function(ListNames){
 #' @param my.list A "flat.list" that includes these names: "names", "av", "sd", "bq", "pd", "br", each of which is an individual matrix.
 #' @return A "tax.list" that has these names: "names", "av", "sd", "bq", "pd", "br", each of which is a nested list that has a matrix for each taxonomy level.
 #' @export group.by.tax
-group.by.tax <- function(my.list){
+group.by.tax <- function(my.list, verbose = FALSE){
   # my.list is either the combo.list or the subset.list
   # should include these names, which contain individual matrices
   #   "names"    "av"    "sd"    "bq"    "pd"    "br"
@@ -122,18 +122,18 @@ group.by.tax <- function(my.list){
   }
  
   
-  cat("\nCombining mean abundances by summing taxa.\n")
+  if (verbose){cat("\nCombining mean abundances by summing taxa.\n")}
   av.list <- group(my.names = my.list$names, my.vals = my.list$av, my.fun = sum, my.levels = agg.levels)
   
-  cat("Calculating standard deviation by propagating error of sums.\n")
+  if (verbose){cat("Calculating standard deviation by propagating error of sums.\n")}
   sd.list <- group(my.names = my.list$names, my.vals = my.list$sd, my.fun = propagate.error.sums, my.levels = agg.levels)
   
-  cat("Classifying as below quantification if not all constituent taxa were above quantification.\n")
+  if (verbose){cat("Classifying as below quantification if not all constituent taxa were above quantification.\n")}
   bq.list <- group(my.names = my.list$names, my.vals = my.list$bq, my.fun = all, my.levels = agg.levels)
   pd.list <- group(my.names = my.list$names, my.vals = my.list$pd, my.fun = all, my.levels = agg.levels)
   br.list <- group(my.names = my.list$names, my.vals = my.list$br, my.fun = all, my.levels = agg.levels)
   
-  cat("Putting all the rows in alphabetical order by taxonomy.\n")
+  if (verbose){cat("Putting all the rows in alphabetical order by taxonomy.\n")}
   names.list <- clean.up.list(grouped.list = bq.list, lowest.level.vals = my.list$bq, lowest.level.names = my.list$names, my.levels = included.levels, 
                               pull.out.names = TRUE)
   av.list <- clean.up.list(grouped.list = av.list, lowest.level.vals = my.list$av, lowest.level.names = my.list$names, my.levels = included.levels)
@@ -142,11 +142,13 @@ group.by.tax <- function(my.list){
   pd.list <- clean.up.list(grouped.list = pd.list, lowest.level.vals = my.list$pd, lowest.level.names = my.list$names, my.levels = included.levels)
   br.list <- clean.up.list(grouped.list = br.list, lowest.level.vals = my.list$br, lowest.level.names = my.list$names, my.levels = included.levels)
   
-  cat("\ncheck row orders match:\n")
-  cat(check.name.order())
-  cat("check if abundances normalized by sample:\n")
-  for (t in 1:length(included.levels)){
-    cat(summary(colSums(av.list[[t]][ ,-(1:t), drop = F])),"\n") # this should be true from previous scripts, shouldn't need to re-nomalize here!
+  if(verbose){
+    cat("\ncheck row orders match:\n")
+    cat(check.name.order())
+    cat("check if abundances normalized by sample:\n")
+    for (t in 1:length(included.levels)){
+      cat(summary(colSums(av.list[[t]][ ,-(1:t), drop = F])),"\n") # this should be true from previous scripts, shouldn't need to re-nomalize here!
+    }
   }
   
   # the pvals info only applies to the OTU-level, once combine OTUs you're combining names with diff pvalues
