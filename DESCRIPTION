@@ -1,0 +1,11 @@
+Package: limony
+Title: lake itag measurements over nineteen years
+Version: 0.0.0.9000
+Authors@R: 
+    person("Robin", "Rohwer", , "robin.rohwer@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-2664-6489"))
+Description: This package includes the processed limony dataset along with scripts for subsetting it. The dataset is a list-formatted object that includes levels for each taxonomy level, as well as the average, standard deviation, and quantification limit information. The functions include ways to subset the data by taxonomy or by sample date.
+License: `use_gpl3_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
