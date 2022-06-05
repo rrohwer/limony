@@ -4,10 +4,12 @@
 \alias{group.by.tax}
 \title{Group by taxonomy}
 \usage{
-group.by.tax(my.list)
+group.by.tax(my.list, verbose = FALSE)
 }
 \arguments{
 \item{my.list}{A "flat.list" that includes these names: "names", "av", "sd", "bq", "pd", "br", each of which is an individual matrix.}
+
+\item{verbose}{Logical.}
 }
 \value{
 A "tax.list" that has these names: "names", "av", "sd", "bq", "pd", "br", each of which is a nested list that has a matrix for each taxonomy level.
