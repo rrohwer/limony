@@ -104,9 +104,9 @@ get.sample.indeces <- function(my.list,
       end.YY.MM.DD <- lubridate::parse_date_time(x = end.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
     }
     
-    date.range <- start.YY.MM.DD %--% end.YY.MM.DD
+    date.range <- start.YY.MM.DD lubridate::%--% end.YY.MM.DD
     cat("The date range is: ", as.character(start.YY.MM.DD), "-", as.character(end.YY.MM.DD), "\n")
-    index.dates <- which(my.dates %within% date.range)
+    index.dates <- which(my.dates lubridate::%within% date.range)
     return(index.dates)
   }
   
