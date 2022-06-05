@@ -12,7 +12,7 @@
 #' This converts the limony sample names (column names) to a date format.
 #' @param sample.names The limony sample names, for ex: colnames(limony$av$kingdom)
 #' @return date-formatted sample dates. Note the time zone is GMT-5.
-#' @export
+#' @export convert.sample.names.to.dates
 convert.sample.names.to.dates <- function(sample.names){
   sample.names <- substr(x = sample.names, start = 1, stop = 9)
   sample.names <- lubridate::parse_date_time(x = sample.names, orders = "dmy", tz = "Etc/GMT-5")
@@ -30,7 +30,7 @@ convert.sample.names.to.dates <- function(sample.names){
 #' @param remove.diff.depths logical. Remove the non-standard samples that were taken at depths different than a 12 m integrated sample.
 #' @param remove.diff.loc logical. Remove the non-standard samples that were taken at a different location that the deep hole.
 #' @return A vector of indexes that can be used in the function subset.by.sample()
-#' @export
+#' @export get.sample.indexes
 get.sample.indexes <- function(my.list,
                            start.YY.MM.DD = "start", end.YY.MM.DD = "end", 
                            dates.are.season.range = FALSE,
@@ -218,7 +218,7 @@ get.sample.indexes <- function(my.list,
 #' @param my.list Either a "tax.list" or a "flat.list", so a list with these names: these names: "names", "av", "sd", "bq", "pd", "br", each of which contains either a list of taxonomy matrices or a single matrix.
 #' @param keep.index The index corresponding to sample dates (columns) that you want to keep. Note that keep.index = -index can be used to remove the provided indexes instead.
 #' @return Either a "tax.list" or a "flat.list" where all the samples (columns) have been subset to the indexes provided.
-#' @export
+#' @export subset.by.sample
 subset.by.sample <- function(my.list, keep.index){
   # my.list can be tax.list or flat.list or y.vals (flat.list + extra y.max element)
   if ( !is.matrix(my.list$bq) ){
@@ -251,7 +251,7 @@ subset.by.sample <- function(my.list, keep.index){
 #' @param group.index.list A list where each element is a vector of sample (column) indexes that should be grouped together.
 #' @param new.colname.vect A vector of new column names. The length of this vector should match the length of the group.index.list.
 #' @return Either a "tax.list" or a "flat.list" where the the samples have been grouped together. Taxon abundances are summed, standard deviation is propagated, and quantification limits are recalculated.
-#' @export
+#' @export group.by.sample
 group.by.sample <- function(my.list, group.index.list, new.colname.vect){
   
   propagate.error.sums <- function(error.vector){

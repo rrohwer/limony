@@ -7,7 +7,7 @@
 #' Make a where each element is NULL but has the provided names.
 #' @param ListNames A vector of names to use
 #' @return A list where each element is NULL but is named with the ListNames
-#' @export
+#' @export make.empty.list.structure
 make.empty.list.structure <- function(ListNames){
   # the ListNames can be something like c("OTU", "kingdom","phylum","class","order","family/lineage","genus/clade","species/tribe")
   empty.list <- list(NULL)
@@ -23,7 +23,7 @@ make.empty.list.structure <- function(ListNames){
 #' Group a "flat list" structure by taxonomy, so that it becomes a nested list with each taxon level included separately. In addition to summing daughter taxa abundances, this function propagates error for the sd and calculates quantification limits.
 #' @param my.list A "flat.list" that includes these names: "names", "av", "sd", "bq", "pd", "br", each of which is an individual matrix.
 #' @return A "tax.list" that has these names: "names", "av", "sd", "bq", "pd", "br", each of which is a nested list that has a matrix for each taxonomy level.
-#' @export
+#' @export group.by.tax
 group.by.tax <- function(my.list){
   # my.list is either the combo.list or the subset.list
   # should include these names, which contain individual matrices

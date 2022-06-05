@@ -15,7 +15,7 @@
 #' @param my.list A "tax.list" that has these names: "names", "av", "sd", "bq", "pd", "br", each of which is a nested list that has a matrix for each taxonomy level.
 #' @param finest.level Either a numeric taxonomy level or a character taxon name. This defines the taxonomy level that the list is flattened to. By default, the OTU-level is chosen.
 #' @return A "flat.list" that includes these names: "names", "av", "sd", "bq", "pd", "br", each of which is an individual matrix at the chosen taxonomy level.
-#' @export
+#' @export flatten.to.single.level
 flatten.to.single.level <- function(my.list, finest.level = length(my.list$bq)){
   if (is.character(finest.level)){
     finest.level <- get.taxon.level(my.list = my.list, taxon = finest.level)
@@ -33,7 +33,7 @@ flatten.to.single.level <- function(my.list, finest.level = length(my.list$bq)){
 #' @param my.list Either a "tax.list" or a "flat.list"
 #' @param taxon An exactly spelled taxon name. This is case sensitive.
 #' @return The numeric taxon level.
-#' @export
+#' @export get.taxon.level
 get.taxon.level <- function(my.list, taxon){
   # my.list can be tax.list or flat.list
   # this will not search through OTU names
@@ -78,7 +78,7 @@ get.taxon.level <- function(my.list, taxon){
 #' @param upper.lvl The numeric upper taxon level names to print. By default no parent taxa are displayed.
 #' @param show.lvls FALSE or numeric vector. If a vector taxon levels is provided, it will print the taxon at those levels.
 #' @param sort.by How to order the daughter taxa. Either a function such as max or mean, or the character strings "presence" or "alphabet." By default results are shown alphabetically.
-#' @export
+#' @export print.names.under.taxon
 print.names.under.taxon <- function(my.list, taxon, lower.lvl = "print minimum", upper.lvl = F, show.lvls = F, sort.by = "alphabet"){
   # my.list can be tax.list or flat.list
   
@@ -135,7 +135,7 @@ print.names.under.taxon <- function(my.list, taxon, lower.lvl = "print minimum",
 #' @param my.list A "flat.list" that includes these names: "names", "av", "sd", "bq", "pd", "br", each of which is an individual matrix.
 #' @param taxa A character vector of taxa names. Spelling is case sensitive and must be exact.
 #' @return A numeric vector of row indexes corresponding to the taxa provided. This can be input into the subset.by.taxa function.
-#' @export
+#' @export get.taxon.indexes
 get.taxon.indexes <- function(my.list, taxa){
   # taxon is a character vector of taxa names 
   
@@ -171,7 +171,7 @@ get.taxon.indexes <- function(my.list, taxa){
 #' @param verbose Logical. Print messages about what's being done.
 #' @return Either a "tax.list" or a "flat.list" that has been normalized.
 #' After subsetting taxa
-#' @export
+#' @export renormalize
 renormalize <- function(my.list, by.day = TRUE, by.taxon.max = FALSE, verbose = TRUE){
   
   renorm.by.day <- function(my.mat, col.tots){
@@ -256,7 +256,7 @@ renormalize <- function(my.list, by.day = TRUE, by.taxon.max = FALSE, verbose = 
 #' @param keep.index A numeric vector of row indexes to keep.
 #' @param renormalize Logical. Should samples be re-normalized to that abundances on a given day sum to 100%.
 #' @param verbose Logical. 
-#' @export
+#' @export subset.by.taxa
 subset.by.taxa <- function(my.list, keep.index, renormalize = F, verbose = T){
   
   # functions ----
@@ -331,7 +331,7 @@ subset.by.taxa <- function(my.list, keep.index, renormalize = F, verbose = T){
 #' @param LOQ.def Either "bq", "br", or "pd"
 #' @param renorm Logical. Should samples dates be renomralized to 100% total abundance.
 #' @param verbose Logical.
-#' @export
+#' @export make.zero.below.LOQ
 make.zero.below.LOQ <- function(my.list, LOQ.def = "bq", renorm = TRUE, verbose = TRUE){
   # my.list can be tax.list or flat.list or y.vals (flat.list + extra y.max element)
   if ( !is.matrix(my.list$bq) ){
