@@ -11,6 +11,9 @@
 
 \item{sort.by}{Any function that will be applied to summarize the abundance of the rows. For example, this could be sum, mean, median. It could also be the character string "presence" to sort by presence/absence.}
 }
+\value{
+a flat list with rows sorted by abundance instead of alphabetically.
+}
 \description{
 Sort the OTU table rows by the overall abundances of the OTU. Can use your preferred summary function.
 }

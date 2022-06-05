@@ -4,12 +4,14 @@
 \alias{get.taxon.level}
 \title{Get the taxonomy level of a given taxon name}
 \usage{
-get.taxon.level(my.list, taxon)
+get.taxon.level(my.list, taxon, verbose = TRUE)
 }
 \arguments{
 \item{my.list}{Either a "tax.list" or a "flat.list"}
 
 \item{taxon}{An exactly spelled taxon name. This is case sensitive.}
+
+\item{verbose}{Logical.}
 }
 \value{
 The numeric taxon level.

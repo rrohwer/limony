@@ -26,6 +26,9 @@
 
 \item{sort.by}{How to order the daughter taxa. Either a function such as max or mean, or the character strings "presence" or "alphabet." By default results are shown alphabetically.}
 }
+\value{
+Does not return a value, instead prints output to the console.
+}
 \description{
 For the provided taxon name, print the names of its constituent taxa. This can be used to step down a taxonomy and find the correct spellings of daughter taxa.
 }
