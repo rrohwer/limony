@@ -105,13 +105,15 @@ Subsetting by taxa can be annoying, because the taxonomy name is case sensitive 
 
 Example: I want to subset Microcystis, but I don't know exactly what it's called in Silva.
 ```{r eval=TRUE}
-# I know it's a cyanobacteria
-print.names.under.taxon(my.list = limony, taxon = "Cyanobacteria")
+# I know it's a "Cyanobacteriales"
+print.names.under.taxon(my.list = limony, taxon = "Cyanobacteriales")
 
-# Now I can step down the taxonomy until I find the correct spelling.
-# I'll order by most abundant so that I find it easily.
-print.names.under.taxon(my.list = limony, taxon = "Cyanobacteriia", sort.by = mean)
+# Aha! Looks like it's "Microcystaceae".
+print.names.under.taxon(my.list = limony, taxon = "Microcystaceae")
 
-
+# And specifically like it is "Microcystis.Microcystaceae"
+# Now I can use this spelling to subset out Microcystis:
+index <- get.taxon.indexes(my.list = limony, taxa = "Microcystis.Microcystaceae")
+microcystis <- subset.by.taxa(my.list = limony, keep.index = index)
 
 ```
