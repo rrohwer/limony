@@ -1,5 +1,5 @@
 # limony
-lake itag measurements over nineteen years
+**lake itag measurements over nineteen years**
 
 Please cite: INSERT WHEN HAVE
 
@@ -22,4 +22,8 @@ library(limony)
 data("limony")
 browseVignettes(package = "limony")
 ```
-Or find the vignette here: ugh where is it
+Or browse the vignette here: [introduction](https://htmlpreview.github.io/?https://github.com/rrohwer/limony/blob/main/introduction.html)
+
+**Contact**
+Robin.Rohwer@gmail.com
+twitter: @RobinRohwer
