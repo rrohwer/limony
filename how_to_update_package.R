@@ -24,4 +24,5 @@ library(limony)
 data("limony")
 # limony:: # to view all script options
 
+devtools::build_vignettes(pkg = "limony")
 browseVignettes(package = "limony")
