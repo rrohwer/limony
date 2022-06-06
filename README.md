@@ -13,7 +13,7 @@ install.packages("lubridate")
 
 Now install the limony package like so:
 ```
-devtools::install_github("rrohwer/limony")
+devtools::install_github("rrohwer/limony", build_vignettes = TRUE)
 ```
 
 Find the limony dataset and directions with:
