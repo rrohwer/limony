@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>limony</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">limony</h1>
+<h3 class="subtitle">lake itag measurements over nineteen years</h3>
+
+
+
+<p>Please cite: <em>Data Announcement citation</em></p>
+<div id="get-started" class="section level2">
+<h2>get started</h2>
+<p>This package includes the limony dataset and functions to subset it.
+The limony dataset is a nineteen year 16S rRNA gene amplicon dataset
+from Lake Mendota, WI USA. More information about the dataset itself is
+available in the data announcement: <em>citation</em></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the limony package</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(limony)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the limony data</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;limony&quot;</span>)</span></code></pre></div>
+<p>Let’s explore the nested list data structure:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The top level lists contain names, abundances, etc</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(limony)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;names&quot; &quot;av&quot;    &quot;sd&quot;    &quot;bq&quot;    &quot;pd&quot;    &quot;br&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The nested lists are for each taxon level</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(limony<span class="sc">$</span>av)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Kingdom&quot;        &quot;Phylum&quot;         &quot;Class&quot;          &quot;Order&quot;         </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5] &quot;Family/Lineage&quot; &quot;Genus/Clade&quot;    &quot;Species/Tribe&quot;  &quot;seqID&quot;</span></span></code></pre></div>
+<table>
+<colgroup>
+<col width="34%" />
+<col width="65%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>list name</th>
+<th>Matrix contents</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>names</td>
+<td>Taxonomy Assignments (character)</td>
+</tr>
+<tr class="even">
+<td>av</td>
+<td>Average abundances (numeric, the OTU table)</td>
+</tr>
+<tr class="odd">
+<td>sd</td>
+<td>Standard deviations (numeric)</td>
+</tr>
+<tr class="even">
+<td>bq</td>
+<td>Below quantification (logical, true if pd OR br)</td>
+</tr>
+<tr class="odd">
+<td>pd</td>
+<td>Partial detection (logical, true if not present in all
+replicates)</td>
+</tr>
+<tr class="even">
+<td>br</td>
+<td>Below resolution (logical, true if abundance is lower than a single
+read at the worst sequencing depth)</td>
+</tr>
+</tbody>
+</table>
+<p>The limony package lets you easily subset this list structure to
+extract the dates or taxa you are interested in, while maintaining all
+the other information about standard deviation and quantification
+limits. This vignette will go through how to use the subsetting
+functions.</p>
+</div>
+<div id="get-otu-table" class="section level2">
+<h2>get OTU table</h2>
+<p><em>“But wait! I just want an OTU table!”</em> No problem, do this
+and skip the rest of the vignette :)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>otu.table <span class="ot">&lt;-</span> limony<span class="sc">$</span>av<span class="sc">$</span>seqID</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>otu.taxonomy <span class="ot">&lt;-</span> limony<span class="sc">$</span>names<span class="sc">$</span>seqID</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sample.dates <span class="ot">&lt;-</span> <span class="fu">convert.sample.names.to.dates</span>(<span class="at">sample.names =</span> <span class="fu">colnames</span>(otu.table))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>otu.table[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="co"># numeric matrix</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           15Mar2000.pf 30Mar2000.D8pf 14Apr2000.D8pf</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; otu_24787            0              0              0</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; otu_20160            0              0              0</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; otu_12395            0              0              0</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>otu.taxonomy[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="co"># character matrix</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      kingdom   phylum            class                          </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] &quot;Archaea&quot; &quot;Aenigmarchaeota&quot; &quot;Aenigmarchaeia&quot;               </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,] &quot;Archaea&quot; &quot;Aenigmarchaeota&quot; &quot;Deep_Sea_Euryarchaeotic_Group&quot;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] &quot;Archaea&quot; &quot;Crenarchaeota&quot;   &quot;Bathyarchaeia&quot;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>sample.dates[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="co"># dates vector</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2000-03-15 +05&quot; &quot;2000-03-30 +05&quot; &quot;2000-04-14 +05&quot;</span></span></code></pre></div>
+</div>
+<div id="subset-by-sample" class="section level2">
+<h2>subset by sample</h2>
+<p>First get the column indexes of the samples using
+<code>get.sample.inexes</code> and then subset limony using
+<code>subset.by.sample</code>.</p>
+<p>Example: Remove non-standard samples that were pre-filtered:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">get.sample.indexes</span>(<span class="at">my.list =</span> limony, <span class="at">remove.prefiltered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>no.pf <span class="ot">&lt;-</span> <span class="fu">subset.by.sample</span>(<span class="at">my.list =</span> limony, <span class="at">keep.index =</span> index)</span></code></pre></div>
+<p>Example: Keep only samples from 2015:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">get.sample.indexes</span>(<span class="at">my.list =</span> limony, <span class="at">start.YY.MM.DD =</span> <span class="st">&quot;15-1-1&quot;</span>, <span class="at">end.YY.MM.DD =</span> <span class="st">&quot;15-12-31&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>only<span class="fl">.2015</span> <span class="ot">&lt;-</span> <span class="fu">subset.by.sample</span>(<span class="at">my.list =</span> limony, <span class="at">keep.index =</span> index)</span></code></pre></div>
+<p>Example: Keep only samples from June, but across all years:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">get.sample.indexes</span>(<span class="at">my.list =</span> limony, <span class="at">start.YY.MM.DD =</span> <span class="st">&quot;00-6-1&quot;</span>, <span class="at">end.YY.MM.DD =</span> <span class="st">&quot;00-6-31&quot;</span>, <span class="at">dates.are.season.range =</span> <span class="cn">TRUE</span>) <span class="co"># year is ignored, can be any year</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>only.June <span class="ot">&lt;-</span> <span class="fu">subset.by.sample</span>(<span class="at">my.list =</span> limony, <span class="at">keep.index =</span> index)</span></code></pre></div>
+</div>
+<div id="subset-by-taxa" class="section level2">
+<h2>subset by taxa</h2>
+<p>First you flatten the list structure to a single taxon level using
+<code>flatten.to.single.level</code>, then you find the indexes of the
+taxa you want to keep using <code>get.taxon.indexes</code>, then you
+subset to those taxa using <code>subset.by.taxa</code>, and finally you
+re-group to get all the taxonomy levels again using
+<code>group.by.tax</code>. By re-grouping the taxonomy lists you can
+keep track of the average and standard deviation at each taxonomy
+level.</p>
+<p>Example: Keep only acI</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>flat.list <span class="ot">&lt;-</span> <span class="fu">flatten.to.single.level</span>(<span class="at">my.list =</span> limony)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">get.taxon.indexes</span>(<span class="at">my.list =</span> flat.list, <span class="at">taxa =</span> <span class="st">&quot;acI&quot;</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>flat.acI <span class="ot">&lt;-</span> <span class="fu">subset.by.taxa</span>(<span class="at">my.list =</span> flat.list, <span class="at">keep.index =</span> index)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>acI <span class="ot">&lt;-</span> <span class="fu">group.by.tax</span>(<span class="at">my.list =</span> flat.acI)</span></code></pre></div>
+<p>Example: Remove chloroplasts and renormalize the data</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>flat.list <span class="ot">&lt;-</span> <span class="fu">flatten.to.single.level</span>(<span class="at">my.list =</span> limony)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">get.taxon.indexes</span>(<span class="at">my.list =</span> flat.list, <span class="at">taxa =</span> <span class="st">&quot;Chloroplast&quot;</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>flat.no.chloro <span class="ot">&lt;-</span> <span class="fu">subset.by.taxa</span>(<span class="at">my.list =</span> flat.list, <span class="at">keep.index =</span> <span class="sc">-</span>index) <span class="co"># note the minus sign in front of index</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>no.chloro <span class="ot">&lt;-</span> <span class="fu">group.by.tax</span>(<span class="at">my.list =</span> flat.no.chloro)</span></code></pre></div>
+</div>
+<div id="spell-the-taxa-names-correctly" class="section level2">
+<h2>spell the taxa names correctly</h2>
+<p>Subsetting by taxa can be annoying, because the taxonomy name is case
+sensitive and must be spelled correctly. To help you figure out what the
+correct names are, there are is a handy function called
+<code>print.names.under.taxon</code>.</p>
+<p>Example: I want to subset Microcystis, but I don’t know exactly what
+it’s called in Silva.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I know it&#39;s a &quot;Cyanobacteriales&quot;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print.names.under.taxon</span>(<span class="at">my.list =</span> limony, <span class="at">taxon =</span> <span class="st">&quot;Cyanobacteriales&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Cyanobacteriales is a Order which is taxon level 4 </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      Kingdom    Phylum          Class            Order             </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] &quot;Bacteria&quot; &quot;Cyanobacteria&quot; &quot;Cyanobacteriia&quot; &quot;Cyanobacteriales&quot;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Cyanobacteriaceae&quot;             &quot;Gloeocapsaceae&quot;               </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Microcystaceae&quot;                &quot;Nostocaceae&quot;                  </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5] &quot;Oscillatoriaceae&quot;              &quot;Phormidiaceae&quot;                </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [7] &quot;unclassified.Cyanobacteriales&quot;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Aha! Looks like it&#39;s &quot;Microcystaceae&quot;.</span></span></code></pre></div>
+<p>Example putting everything together:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now I can use this spelling to subset out Microcystis in July:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>flat.lim <span class="ot">&lt;-</span> <span class="fu">flatten.to.single.level</span>(<span class="at">my.list =</span> limony)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">get.taxon.indexes</span>(<span class="at">my.list =</span> flat.lim, <span class="at">taxa =</span> <span class="st">&quot;Microcystaceae&quot;</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Microcystaceae is a lineage which is taxon level 5 </span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      kingdom    phylum          class            order             </span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] &quot;Bacteria&quot; &quot;Cyanobacteria&quot; &quot;Cyanobacteriia&quot; &quot;Cyanobacteriales&quot;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      lineage         </span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] &quot;Microcystaceae&quot;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; keeping 222 OTUs belonging to lineage Microcystaceae </span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Returning the row indexes for 222 total OTUs that belong to taxa you want to keep.</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>microcystis <span class="ot">&lt;-</span> <span class="fu">subset.by.taxa</span>(<span class="at">my.list =</span> flat.lim, <span class="at">keep.index =</span> index)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; You are subsetting your samples to this percent of the orig. reads:</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.00000  0.04354  0.53811  1.15198  1.48219 15.27081</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">get.sample.indexes</span>(<span class="at">my.list =</span> microcystis, <span class="at">start.YY.MM.DD =</span> <span class="st">&quot;00-7-1&quot;</span>, <span class="at">end.YY.MM.DD =</span> <span class="st">&quot;19-7-31&quot;</span>, <span class="at">dates.are.season.range =</span> <span class="cn">TRUE</span>, <span class="at">remove.prefiltered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2000-07-01 - 2000-07-31 </span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2001-07-01 - 2001-07-31 </span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2002-07-01 - 2002-07-31 </span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2003-07-01 - 2003-07-31 </span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2004-07-01 - 2004-07-31 </span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2005-07-01 - 2005-07-31 </span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2006-07-01 - 2006-07-31 </span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2007-07-01 - 2007-07-31 </span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2008-07-01 - 2008-07-31 </span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2009-07-01 - 2009-07-31 </span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2010-07-01 - 2010-07-31 </span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2011-07-01 - 2011-07-31 </span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2012-07-01 - 2012-07-31 </span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2013-07-01 - 2013-07-31 </span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2014-07-01 - 2014-07-31 </span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2015-07-01 - 2015-07-31 </span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2016-07-01 - 2016-07-31 </span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2017-07-01 - 2017-07-31 </span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2018-07-01 - 2018-07-31 </span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The date range is:  2019-07-01 - 2019-07-31 </span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Returning the column indexes for 69 total samples that you want to keep.</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>microcystis <span class="ot">&lt;-</span> <span class="fu">subset.by.sample</span>(<span class="at">my.list =</span> microcystis, <span class="at">keep.index =</span> index)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>microcystis <span class="ot">&lt;-</span> <span class="fu">group.by.tax</span>(<span class="at">my.list =</span> microcystis)</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="co"># And I can look at Microcystis OTUs:</span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>microcystis<span class="sc">$</span>av<span class="sc">$</span>seqID[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           01Jul2002 17Jul2002 11Jul2003</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; otu_10079         0         0         0</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; otu_10125         0         0         0</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; otu_10354         0         0         0</span></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Or at the Microcystis Genus</span></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>microcystis<span class="sc">$</span>av<span class="sc">$</span><span class="st">`</span><span class="at">Genus/Clade</span><span class="st">`</span>[ ,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, drop<span class="ot">=</span><span class="cn">FALSE</span>]</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                              01Jul2002  17Jul2002   11Jul2003</span></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Microcystis.Microcystaceae   1.5151515 0.52292207 1.151832212</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Snowella                     0.1176817 0.08256664 1.485489032</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Synechocystis.Microcystaceae 0.0000000 0.00000000 0.000000000</span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; unclassified.Microcystaceae  0.0000000 0.00000000 0.002446064</span></span></code></pre></div>
+</div>
+<div id="contact-me" class="section level2">
+<h2>contact me</h2>
+<p>If you have more questions about the limony dataset or the limony
+package, or if you want to discuss a planned use of this data, please
+contact me: <a href="mailto:Robin.Rohwer@gmail.com" class="email">Robin.Rohwer@gmail.com</a></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
