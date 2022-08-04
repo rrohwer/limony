@@ -1,7 +1,7 @@
 # limony
 **lake itag measurements over nineteen years**
 
-Please cite: INSERT WHEN HAVE- for now please contact Robin.Rohwer@gmail.com before using
+Please cite: IN REVIEW- for now please contact Robin.Rohwer@gmail.com before using this data.
 
 This repo contains scripts that were used to process the limony dataset, and also a package. Loading the package provides both the limony data and functions for subsetting its nested list structure. 
 
