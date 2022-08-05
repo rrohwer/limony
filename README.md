@@ -1,7 +1,7 @@
 # limony
 **lake itag measurements over nineteen years**
 
-Please cite: IN REVIEW- for now please contact Robin.Rohwer@gmail.com before using this data.
+Please cite: [Rohwer & McMahon. Lake iTag measurements over nineteen years, introducing the limony dataset. _bioRxiv._ 2022](https://www.biorxiv.org/content/10.1101/2022.08.04.502869v1)
 
 This repo contains scripts that were used to process the limony dataset, and also a package. Loading the package provides both the limony data and functions for subsetting its nested list structure. 
 
