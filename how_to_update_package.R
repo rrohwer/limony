@@ -25,7 +25,7 @@ usethis::use_data(limony, key, seasons, overwrite = TRUE) # can have multiple ob
 usethis::use_vignette(name = "introduction")
 
 # re-run every time to update the vignette after editing in vignettes/ folder (not doc/ folder!)
-getwd()
+getwd() # "/Users/rohwer/Desktop/limony"
 setwd("../")
 devtools::build_vignettes(pkg = "limony")
 setwd("limony")
@@ -38,5 +38,4 @@ data("limony")
 data("key")
 data("seasons")
 # limony:: # to view all script options
-devtools::build_vignettes(pkg = "limony")
 browseVignettes(package = "limony")

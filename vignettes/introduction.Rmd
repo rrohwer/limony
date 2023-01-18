@@ -117,6 +117,7 @@ Example: I want to subset Microcystis, but I don't know exactly what it's called
 ```{r eval=TRUE}
 # I know it's a "Cyanobacteriales"
 print.names.under.taxon(my.list = limony, taxon = "Cyanobacteriales")
+
 # Aha! Looks like it's "Microcystaceae".
 ```
 Example putting everything together:
