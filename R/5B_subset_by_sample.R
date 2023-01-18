@@ -253,10 +253,10 @@ get.sample.indexes <- function(my.list,
     index.keep <- lubridate::intersect(x = index.keep, y = index.lowyield.keep)
   }
 
-  if (!is.na(index.invasions)){
+  if (!is.na(index.invasions[1])){
     index.keep <- lubridate::intersect(x = index.keep, y = index.invasions)
   }
-  if (!is.na(index.seasons)){
+  if (!is.na(index.seasons[1])){
     index.keep <- lubridate::intersect(x = index.keep, y = index.seasons)
   }
 

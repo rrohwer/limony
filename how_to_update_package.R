@@ -12,7 +12,7 @@ setwd("~/Desktop/")
 devtools::create("limony")
 setwd("limony/")
 
-# re-run every time documentation changes
+# re-run every time documentation or code changes
 devtools::document()
 
 # re-run to update the included data
@@ -21,8 +21,8 @@ key <- readRDS("~/Desktop/pop/data/environmental_data/Robin-Refined/seasons/10_l
 seasons <- readRDS("~/Desktop/pop/data/environmental_data/Robin-Refined/seasons/10_limony_package_seasons.rds")
 usethis::use_data(limony, key, seasons, overwrite = TRUE) # can have multiple objects in this call
 
-# re-run to update the vignettes
-usethis::use_vignette("introduction")
+# run only the first time to set up the vignette (change doc/*.Rmd to edit and re-install package to test it.)
+usethis::use_vignette(name = "introduction")
 devtools::build_vignettes(pkg = "limony")
 
 # re-run after pushing changes to github to test the install from github
