@@ -18,7 +18,9 @@ get.sample.indexes(
   my.key = NA,
   remove.low.dna = F,
   low.yield.ng.uL = 3,
-  only.low.dna = F
+  only.low.dna = F,
+  selected.seasons = NA,
+  selected.invasions = NA
 )
 }
 \arguments{
@@ -35,6 +37,24 @@ get.sample.indexes(
 \item{remove.diff.depths}{logical. Remove the non-standard samples that were taken at depths different than a 12 m integrated sample.}
 
 \item{remove.diff.loc}{logical. Remove the non-standard samples that were taken at a different location that the deep hole.}
+
+\item{only.prefiltered}{logical. Keep only the pre-filtered samples.}
+
+\item{only.diff.depths}{logical. Keep only the non-standard depths.}
+
+\item{only.diff.loc}{logical. Keep only the non-standard locations.}
+
+\item{my.key}{the "key" dataframe supplied with this package.}
+
+\item{remove.low.dna}{logical. Remove samples that had low-yield DNA extractions.}
+
+\item{low.yield.ng.uL}{numeric. The yield cutoff for what counts as low (default = 3 ng/uL).}
+
+\item{only.low.dna}{logical. Keep only low-yield samples.}
+
+\item{selected.seasons}{character vector. Keep only the listed seasons. Season options are "spring", "clearwater", "early summer", "late summer", "fall", "ice-on".}
+
+\item{selected.invasions}{character vector. Keep only the listed invasion regimes. Invasion options are "none", "spiny", "zebra".}
 }
 \value{
 A vector of indexes that can be used in the function subset.by.sample()
