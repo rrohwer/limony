@@ -15,7 +15,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-Please cite: _Data Announcement citation_
+Please cite: [Rohwer & McMahon. Lake iTag measurements over nineteen years, introducing the limony dataset. _bioRxiv._ 2022](https://www.biorxiv.org/content/10.1101/2022.08.04.502869v1)
+
+If you use the season data provided, please also cite: [Rohwer _et al._ Species invasions shift microbial phenology in a two-decade freshwater time series. _bioRxiv_. 2022](https://www.biorxiv.org/content/10.1101/2022.08.04.502871v1)
 
 ## get started
 
@@ -78,6 +80,14 @@ Example: Keep only samples from June, but across all years:
 ```{r, eval=FALSE}
 index <- get.sample.indexes(my.list = limony, start.YY.MM.DD = "00-6-1", end.YY.MM.DD = "00-6-31", dates.are.season.range = TRUE) # year is ignored, can be any year
 only.June <- subset.by.sample(my.list = limony, keep.index = index)
+```
+
+Example: Keep only summer season samples from after the invasions (refer to [this paper](https://www.biorxiv.org/content/10.1101/2022.08.04.502871v1) for the season definitions):
+```{r, eval=FALSE}
+# first load the season data
+data("key") 
+index <- get.sample.indexes(my.list = limony, my.key = key, selected.seasons = c("early summer", "late summer"), selected.invasions = c("spiny","zebra")) 
+only.invaded.summer <- subset.by.sample(my.list = limony, keep.index = index)
 ```
 
 ## subset by taxa

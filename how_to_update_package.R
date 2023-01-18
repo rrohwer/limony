@@ -21,15 +21,22 @@ key <- readRDS("~/Desktop/pop/data/environmental_data/Robin-Refined/seasons/10_l
 seasons <- readRDS("~/Desktop/pop/data/environmental_data/Robin-Refined/seasons/10_limony_package_seasons.rds")
 usethis::use_data(limony, key, seasons, overwrite = TRUE) # can have multiple objects in this call
 
-# run only the first time to set up the vignette (change doc/*.Rmd to edit and re-install package to test it.)
+# run only the first time to set up the vignette
 usethis::use_vignette(name = "introduction")
-devtools::build_vignettes(pkg = "limony")
 
-# re-run after pushing changes to github to test the install from github
+# re-run every time to update the vignette after editing in vignettes/ folder (not doc/ folder!)
+getwd()
+setwd("../")
+devtools::build_vignettes(pkg = "limony")
+setwd("limony")
+
+# re-run after pushing changes to github to test the install from github (and re-render the new vignettes)
 remove.packages("limony")
-devtools::install_github("rrohwer/limony")
+devtools::install_github("rrohwer/limony", build_vignettes = TRUE)
 library(limony)
 data("limony")
+data("key")
+data("seasons")
 # limony:: # to view all script options
 devtools::build_vignettes(pkg = "limony")
 browseVignettes(package = "limony")
