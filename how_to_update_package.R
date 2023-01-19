@@ -29,6 +29,7 @@ getwd() # "/Users/rohwer/Desktop/limony"
 setwd("../")
 devtools::build_vignettes(pkg = "limony")
 setwd("limony")
+# and copy over the html version that is easy-access on the github readme from doc/introduction.html
 
 # re-run after pushing changes to github to test the install from github (and re-render the new vignettes)
 remove.packages("limony")
