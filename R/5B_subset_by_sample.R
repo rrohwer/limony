@@ -143,14 +143,14 @@ get.sample.indexes <- function(my.list,
     }
 
     if (start.YY.MM.DD == "start"){
-      start.YY.MM.DD <- paste(min(year(my.dates)),1,1,sep = "-")
+      start.YY.MM.DD <- paste(min(lubridate::year(my.dates)),1,1,sep = "-")
       start.YY.MM.DD <- lubridate::parse_date_time(x = start.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
     }else{
       start.YY.MM.DD <- lubridate::parse_date_time(x = start.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
     }
 
     if (end.YY.MM.DD == "end"){
-      end.YY.MM.DD <- paste(max(year(my.dates)),12,31,sep = "-")
+      end.YY.MM.DD <- paste(max(lubridate::year(my.dates)),12,31,sep = "-")
       end.YY.MM.DD <- lubridate::parse_date_time(x = end.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
     }else{
       end.YY.MM.DD <- lubridate::parse_date_time(x = end.YY.MM.DD, orders = "ymd", tz = "Etc/GMT-5")
