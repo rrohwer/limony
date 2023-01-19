@@ -6,11 +6,11 @@ library(roxygen2)
 library(usethat)
 library(usethis)
 
-# Run the first time only to create the package directory
-getwd()
-setwd("~/Desktop/")
-devtools::create("limony")
-setwd("limony/")
+# # Run the first time only to create the package directory
+# getwd()
+# setwd("~/Desktop/")
+# devtools::create("limony")
+# setwd("limony/")
 
 # re-run every time documentation or code changes
 devtools::document()
@@ -21,8 +21,8 @@ key <- readRDS("~/Desktop/pop/data/environmental_data/Robin-Refined/seasons/10_l
 seasons <- readRDS("~/Desktop/pop/data/environmental_data/Robin-Refined/seasons/10_limony_package_seasons.rds")
 usethis::use_data(limony, key, seasons, overwrite = TRUE) # can have multiple objects in this call
 
-# run only the first time to set up the vignette
-usethis::use_vignette(name = "introduction")
+# # run only the first time to set up the vignette
+# usethis::use_vignette(name = "introduction")
 
 # re-run every time to update the vignette after editing in vignettes/ folder (not doc/ folder!)
 getwd() # "/Users/rohwer/Desktop/limony"
