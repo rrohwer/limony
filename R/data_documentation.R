@@ -2,6 +2,7 @@
 # documentation for the data objects
 
 #' limony
+#'
 #' The nested list structure that contains all OTU tables.
 #' For a visual diagram, see Figure 3 in the limony data announcement.
 #' Please cite the limony data announcement if you use this data:
@@ -20,6 +21,7 @@
 "limony"
 
 #' key
+#'
 #' A data frame that includes information about each sample
 #' If you use the season information, please cite the paper that defined the seasons:
 #' Rohwer et al. Species invasions shift microbial phenology in a two-decade freshwater time series. bioRxiv. 2022
@@ -49,6 +51,7 @@
 "key"
 
 #' seasons
+#'
 #' A data frame that includes start dates for each season each year
 #' If you use the season information, please cite the paper that defined the seasons:
 #' Rohwer et al. Species invasions shift microbial phenology in a two-decade freshwater time series. bioRxiv. 2022

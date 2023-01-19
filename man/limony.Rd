@@ -3,11 +3,7 @@
 \docType{data}
 \name{limony}
 \alias{limony}
-\title{limony
-The nested list structure that contains all OTU tables.
-For a visual diagram, see Figure 3 in the limony data announcement.
-Please cite the limony data announcement if you use this data:
-Rohwer & McMahon. Lake iTag measurements over nineteen years, introducing the limony dataset. bioRxiv. 2022}
+\title{limony}
 \format{
 \subsection{\code{limony}}{
 
@@ -29,7 +25,6 @@ Rohwer & McMahon. Lake iTag measurements over nineteen years, introducing the li
 limony
 }
 \description{
-limony
 The nested list structure that contains all OTU tables.
 For a visual diagram, see Figure 3 in the limony data announcement.
 Please cite the limony data announcement if you use this data:

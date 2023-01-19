@@ -3,10 +3,7 @@
 \docType{data}
 \name{seasons}
 \alias{seasons}
-\title{seasons
-A data frame that includes start dates for each season each year
-If you use the season information, please cite the paper that defined the seasons:
-Rohwer et al. Species invasions shift microbial phenology in a two-decade freshwater time series. bioRxiv. 2022}
+\title{seasons}
 \format{
 \subsection{\code{seasons}}{
 
@@ -28,7 +25,6 @@ Rohwer et al. Species invasions shift microbial phenology in a two-decade freshw
 seasons
 }
 \description{
-seasons
 A data frame that includes start dates for each season each year
 If you use the season information, please cite the paper that defined the seasons:
 Rohwer et al. Species invasions shift microbial phenology in a two-decade freshwater time series. bioRxiv. 2022

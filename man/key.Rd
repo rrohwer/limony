@@ -3,10 +3,7 @@
 \docType{data}
 \name{key}
 \alias{key}
-\title{key
-A data frame that includes information about each sample
-If you use the season information, please cite the paper that defined the seasons:
-Rohwer et al. Species invasions shift microbial phenology in a two-decade freshwater time series. bioRxiv. 2022}
+\title{key}
 \format{
 \subsection{\code{key}}{
 
@@ -40,7 +37,6 @@ Rohwer et al. Species invasions shift microbial phenology in a two-decade freshw
 key
 }
 \description{
-key
 A data frame that includes information about each sample
 If you use the season information, please cite the paper that defined the seasons:
 Rohwer et al. Species invasions shift microbial phenology in a two-decade freshwater time series. bioRxiv. 2022
