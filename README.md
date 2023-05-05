@@ -29,4 +29,4 @@ Robin.Rohwer@gmail.com
 twitter: @RobinRohwer
 
 You may also be interested in what we have done with limony:  
-[Rohwer _et al._ Species invasions shift microbial phenology in a two-decade freshwater time series. _bioRxiv_. 2022](https://www.biorxiv.org/content/10.1101/2022.08.04.502871v1)
+[Rohwer _et al._ Species invasions shift microbial phenology in a two-decade freshwater time series. _PNAS_. 2023](https://www.pnas.org/doi/10.1073/pnas.2211796120)
