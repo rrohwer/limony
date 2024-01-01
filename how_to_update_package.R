@@ -18,7 +18,7 @@ devtools::document()
 # re-run to update the included data
 limony <- readRDS("~/Desktop/pop/data/limony-IRD/2021-08-25_processing/5A_taxlist_samples_6000.rds")
 key <- readRDS("~/Desktop/pop/data/environmental_data/Robin-Refined/seasons/10_limony_package_key.rds")
-seasons <- readRDS("~/Desktop/pop/data/environmental_data/Robin-Refined/seasons/10_limony_package_seasons.rds")
+seasons <- readRDS("~/Desktop/pop/data/environmental_data/Robin-Refined/seasons/11_limony_package_seasons.rds")
 usethis::use_data(limony, key, seasons, overwrite = TRUE) # can have multiple objects in this call
 
 # # run only the first time to set up the vignette
