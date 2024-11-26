@@ -100,7 +100,7 @@ flat.list <- flatten.to.single.level(my.list = limony)
 index <- get.taxon.indexes(my.list = flat.list, taxa = "acI")
 flat.acI <- subset.by.taxa(my.list = flat.list, keep.index = index)
 acI <- group.by.tax(my.list = flat.acI)
-````
+```
 
 Example: Remove chloroplasts and renormalize the data
 ```{r eval=FALSE}

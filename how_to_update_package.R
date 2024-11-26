@@ -3,7 +3,7 @@
 
 library(devtools)
 library(roxygen2)
-library(usethat)
+# library(usethat)
 library(usethis)
 
 # # Run the first time only to create the package directory
